@@ -1,0 +1,37 @@
+{
+  "name": "hexo-minifer",
+  "version": "0.0.1",
+  "description": "Atom feed generator plugin for Hexo",
+  "main": "index",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ChrisYip/hexo-minifier.git"
+  },
+  "keywords": [
+    "website",
+    "blog",
+    "minifier",
+    "compressor",
+    "hexo"
+  ],
+  "author": {
+    "name": "Chris Yip",
+    "email": "i@chrisyip.im",
+    "url": "http://chrisyip.im/"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://raw.github.com/ChrisYip/hexo-minifier/master/LICENSE"
+  },
+  "engines": {
+    "hexo": ">=0.5.0"
+  },
+  "dependencies": {
+    "graceful-fs": "~1.2.0",
+    "uglify-js": "~2.2.4",
+    "css-condense": "~0.0.6"
+  },
+  "readmeFilename": "README.md",
+  "_id": "hexo-minifer@0.0.1",
+  "_from": "hexo-minifer@"
+}
