@@ -1,8 +1,8 @@
 # CSS and JavaScript minifier plugin for [Hexo]
 
-This plugin provides a command to minify all the CSS and JavaScript files.
+This plugin allows you to minify all the CSS and JavaScript files.
 
-Note: file must end with `.css` or `.js` and no `.min.` in filename.
+Note: files must end with `.css` or `.js` and files with `.min.` will be ignored.
 
 ## Usage
 
@@ -27,11 +27,10 @@ npm uninstall hexo-minifer
 ### Usage
 
 ```
-hexo generate
-hexo minify
+hexo minify [-g|-generate]
 ```
 
-Due to the [issue #82](https://github.com/tommy351/hexo/issues/82), you must run `hexo generate` manually before minifing files.
+With the argument: `-g` or `-generate`, or `public` folder isnot exist, minifier will generate files before minification.
 
 ### About HTML minifier
 

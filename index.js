@@ -1,6 +1,7 @@
 var UglifyJS = require( 'uglify-js' )
   , css_condense = require( 'css-condense' )
   , fs = require( 'graceful-fs' )
+  , async = require( 'async' )
   , extend = hexo.extend
 
 extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args ) {
@@ -24,31 +25,42 @@ extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args )
     })
   }
 
-  read_file = function( path ) {
-    var _path = path
+  async.series( [
+    function ( next ) {
+      console.log( 1 )
+      if ( args.g || args.generate ) {
+        hexo.call( 'generate', next )
+      } else {
+        fs.exists( hexo.public_dir, function ( exist ) {
+          exist ? next() : hexo.call( 'generate', next )
+        } )
+      }
+    }, function(){
 
-    fs.readdir( _path, function( err, files ) {
-      files.forEach( function( file ) {
-        if ( file.indexOf( '.min.' ) > -1 ) return;
-        
-        var path = _path + '/' + file
-        fs.stat( path, function( err, stats) {
-          if ( err ) return;
+      ( function( path ) {
+        var _path = path
 
-          if ( stats.isDirectory() ) {
-            read_file( path )
-          } else if ( stats.isFile() ) {
-            var ext = /\.(js|css?)$/i.exec( file )
-            if ( ext ) {
-              fs.readFile( path, 'utf8', function( err, data ) {
-                compressor( path, data, ext[1] )
-              })
-            }
-          }
+        fs.readdir( _path, function( err, files ) {
+          files.forEach( function( file ) {
+            if ( file.indexOf( '.min.' ) > -1 ) return;
+
+            var path = _path + '/' + file
+            fs.stat( path, function( err, stats) {
+              if ( err ) return;
+
+              if ( stats.isDirectory() ) {
+                arguments.callee.call( null, path )
+              } else if ( stats.isFile() ) {
+                var ext = /\.(js|css?)$/i.exec( file )
+                if ( ext ) {
+                  fs.readFile( path, 'utf8', function( err, data ) {
+                    compressor( path, data, ext[1] )
+                  })
+                }
+              }
+            })
+          })
         })
-      })
-    })
-  }
-
-  read_file( 'public' )
+      } )( hexo.public_dir )
+    } ], function(){} )
 })
