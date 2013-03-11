@@ -5,8 +5,7 @@ var UglifyJS = require( 'uglify-js' )
   , extend = hexo.extend
 
 extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args ) {
-  var config = hexo.config
-    , read_file, compressor
+  var config = hexo.config, compressor
 
   compressor = function( path, data, type ) {
     if ( type === 'js' ) {
@@ -27,7 +26,6 @@ extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args )
 
   async.series( [
     function ( next ) {
-      console.log( 1 )
       if ( args.g || args.generate ) {
         hexo.call( 'generate', next )
       } else {
@@ -39,6 +37,7 @@ extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args )
 
       ( function( path ) {
         var _path = path
+          , fn = arguments.callee
 
         fs.readdir( _path, function( err, files ) {
           files.forEach( function( file ) {
@@ -49,7 +48,7 @@ extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args )
               if ( err ) return;
 
               if ( stats.isDirectory() ) {
-                arguments.callee.call( null, path )
+                fn.call( null, path )
               } else if ( stats.isFile() ) {
                 var ext = /\.(js|css?)$/i.exec( file )
                 if ( ext ) {
