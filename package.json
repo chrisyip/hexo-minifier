@@ -1,5 +1,5 @@
 {
-  "name": "hexo-minifer",
+  "name": "hexo-minifier",
   "version": "0.0.2",
   "description": "CSS and JavaScript minification plugin for Hexo",
   "main": "index",
