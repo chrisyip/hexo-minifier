@@ -2,6 +2,7 @@ var UglifyJS = require( 'uglify-js' )
   , css_condense = require( 'css-condense' )
   , fs = require( 'graceful-fs' )
   , async = require( 'async' )
+  , wrench = require('wrench')
   , extend = hexo.extend
 
 extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args ) {
@@ -27,7 +28,13 @@ extend.console.register( 'minify', 'Minify CSS and JavaScript', function( args )
   async.series( [
     function ( next ) {
       if ( args.g || args.generate ) {
-        hexo.call( 'generate', next )
+        fs.exists( hexo.public_dir, function( exists ) {
+          if ( exists ) {
+            // remove exist files to avoid cache issue
+            wrench.rmdirSyncRecursive( hexo.public_dir )
+          }
+          hexo.call( 'generate', next )
+        } )
       } else {
         fs.exists( hexo.public_dir, function ( exist ) {
           exist ? next() : hexo.call( 'generate', next )

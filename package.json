@@ -1,6 +1,6 @@
 {
   "name": "hexo-minifier",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CSS and JavaScript minification plugin for Hexo",
   "main": "index",
   "repository": {
@@ -30,7 +30,8 @@
     "graceful-fs": "~1.2.0",
     "uglify-js": "~2.2.4",
     "css-condense": "~0.0.6",
-    "async": "~0.2.6"
+    "async": "~0.2.6",
+    "wrench": "~1.4.4"
   },
   "readmeFilename": "README.md",
   "_id": "hexo-minifer@0.0.1",
