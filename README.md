@@ -1,3 +1,5 @@
+# This project's discontinued!
+
 # CSS and JavaScript minifier plugin for [Hexo]
 
 This plugin allows you to minify all the CSS and JavaScript files.
